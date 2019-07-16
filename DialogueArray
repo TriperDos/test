@@ -1,0 +1,41 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class DialogueManager : MonoBehaviour
+{
+    public string[] sentences;
+    private int index;
+    public float typingSpeed;
+    public Text dialog;
+
+
+    private void Start()
+    {
+        StartCoroutine(Type());
+    }
+
+    IEnumerator Type()
+    {
+        foreach(char letter in sentences[index].ToCharArray())
+        {
+            dialog.text += letter;
+            yield return new WaitForSeconds(typingSpeed);   
+        }
+    }
+
+    public void NextSentence()
+    {
+        if(index < sentences.Length - 1)
+        {
+            index++;
+            dialog.text = "";
+            StartCoroutine(Type());
+        }
+        else
+        {
+            dialog.text = "";
+        }
+    }
+}
