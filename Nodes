@@ -1,0 +1,63 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+class Nodes : MonoBehaviour
+{
+    public NodeExampl[] nodes;
+    public float typingSpeed;
+    public Text dialog;
+    private int indexx;
+
+
+    private void Start()
+    {
+        for (int i = 0; i < nodes.Length; i++)
+        {
+            Dialog(nodes[i]);
+        }
+            
+    }
+    public void Dialog(NodeExampl dialogManager)
+    {
+        for (int i = 0; i < dialogManager.buttons.Length; i++)
+        {
+            GameObject newButton = Instantiate(dialogManager.buttonAnswer) as GameObject;
+            newButton.transform.SetParent(dialogManager.BoxDialog.transform, false);
+            Text txt = newButton.GetComponentInChildren<Text>();
+            txt.text = dialogManager.Answers[i];
+            Button butn = newButton.GetComponentInChildren<Button>();
+            dialogManager.buttons[i] = newButton;
+
+            switch (i)
+            {
+                case 0:
+                    indexx = 0;
+                    dialog.text = dialogManager.sentences[indexx];
+                    break;
+                case 1:
+                    indexx = 1;
+                    dialog.text = dialogManager.sentences[indexx];
+                    break;
+                case 2:
+                    indexx = 2;
+                    dialog.text = dialogManager.sentences[indexx];
+                    //butn.onClick.AddListener(delegate { D1S3(); });
+                    break;
+            }
+
+        }
+    }
+}
+
+
+[System.Serializable]
+class NodeExampl
+{
+    public string[] sentences;
+    public string[] Answers;
+    public GameObject[] buttons;
+    public GameObject buttonAnswer;
+    public GameObject BoxDialog;
+}
