@@ -1,0 +1,77 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+[System.Serializable]
+public class DialogueManager 
+{
+    public string[] sentences;
+    public string[] Answers;
+    public GameObject[] buttons;
+    public GameObject buttonAnswer;
+    public GameObject BoxDialog;
+    private int indexx;
+    public float typingSpeed;
+    public Text dialog;
+
+
+    private void Start()
+    {
+        //StartCoroutine(Type());
+
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            GameObject newButton = Instantiate(buttonAnswer) as GameObject;
+            newButton.transform.SetParent(BoxDialog.transform, false);
+            Text txt = newButton.GetComponentInChildren<Text>();
+            txt.text = Answers[i];
+            Button butn = newButton.GetComponentInChildren<Button>();
+            buttons[i] = newButton;
+
+            switch (i)
+            {
+                case 0:
+                    butn.onClick.AddListener(delegate { D1S1(); });
+                    break;
+                case 1:
+                    butn.onClick.AddListener(delegate { D1S2(); });
+                    break;
+                case 2:
+                    butn.onClick.AddListener(delegate { D1S3(); });
+                    break;
+            }
+
+        }
+    }
+
+    //IEnumerator Type()
+    //{
+    //    foreach (char letter in sentences[indexx].ToCharArray())
+    //    {
+    //        dialog.text += letter;
+    //        yield return new WaitForSeconds(typingSpeed);
+    //    }
+    //}
+
+    public void D1S1()
+    {
+        indexx = 0;
+        dialog.text = sentences[indexx];
+
+        //StartCoroutine(Type());
+    }
+
+    public void D1S2()
+    {
+        indexx = 1;
+        dialog.text = sentences[indexx];
+        //StartCoroutine(Type());
+    }
+    public void D1S3()
+    {
+        indexx = 2;
+        dialog.text = sentences[indexx];
+        //StartCoroutine(Type());
+    }
+}
